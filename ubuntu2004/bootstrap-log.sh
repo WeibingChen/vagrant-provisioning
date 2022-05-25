@@ -44,7 +44,7 @@ curl -s https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add 
 apt-add-repository "deb http://mirrors.ustc.edu.cn/kubernetes/apt kubernetes-xenial main" >>${BOOTSTRAP} 2>&1
 
 echo "[TASK 7] Install Kubernetes components (kubeadm, kubelet and kubectl)"
-apt install -qq -y kubeadm=1.22.0-00 kubelet=1.22.0-00 kubectl=1.22.0-00 >>${BOOTSTRAP} 2>&1
+apt install -qq -y kubeadm=1.23.0-00 kubelet=1.23.0-00 kubectl=1.23.0-00 >>${BOOTSTRAP} 2>&1
 
 echo "[TASK 8] Enable ssh password authentication"
 sed -i 's/^PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
@@ -59,5 +59,5 @@ echo "[TASK 10] Update /etc/hosts file"
 cat >>/etc/hosts<<EOF
 192.168.56.100   kmaster.example.com     kmaster
 192.168.56.101   kworker1.example.com    kworker1
-192.168.56.102   kworker2.example.com    kworker2
+#192.168.56.102   kworker2.example.com    kworker2
 EOF

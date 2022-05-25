@@ -4,17 +4,17 @@
 ### 主机信息
 | hostname | ip | box(os)| CPU | Memory |
 | ---- | ---- | ---- | ---- | ---- |
-| kmaster | 192.168.56.100 | [generic/ubuntu2004 3.3.0](https://app.vagrantup.com/generic/boxes/ubuntu2004/versions/3.3.0) | 2 cores | 2G |
-| kworker1 | 192.168.56.101 | [generic/ubuntu2004 3.3.0](https://app.vagrantup.com/generic/boxes/ubuntu2004/versions/3.3.0) | 1 core | 1G |
-| kworker2 | 192.168.56.102 | [generic/ubuntu2004 3.3.0](https://app.vagrantup.com/generic/boxes/ubuntu2004/versions/3.3.0) | 1 core | 1G |
+| kmaster | 172.16.16.100 | [generic/ubuntu2004 3.3.0](https://app.vagrantup.com/generic/boxes/ubuntu2004/versions/3.3.0) | 2 cores | 2G |
+| kworker1 | 172.16.16.101 | [generic/ubuntu2004 3.3.0](https://app.vagrantup.com/generic/boxes/ubuntu2004/versions/3.3.0) | 1 core | 1G |
+| kworker2 | 172.16.16.102 | [generic/ubuntu2004 3.3.0](https://app.vagrantup.com/generic/boxes/ubuntu2004/versions/3.3.0) | 1 core | 1G |
 
 ### 版本信息
 | name | version |
 | ---- | ---- |
 | docker/containerd | - |
-| kubeadm | 1.22-00 |
-| kubelet | 1.22-00 |
-| kubectl | 1.22-00 |
+| kubeadm | 1.23-00 |
+| kubelet | 1.23-00 |
+| kubectl | 1.23-00 |
 
 ### 使用
 
@@ -28,11 +28,11 @@ $ vagrant up
 $ vagrant ssh kmaster
 $ sudo -i
 # 或者通过ssh，`root`密码在脚本已经配置好了`kubeadmin`
-$ ssh root@192.168.56.100
+$ ssh root@172.16.16.100
 # 登录进去之后，可以简单测试，显示如下信息说明集群成功了
 root@kmaster:~/ # kubectl cluster-info
-Kubernetes control plane is running at https://192.168.56.100:6443
-CoreDNS is running at https://192.168.56.100:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+Kubernetes control plane is running at https://172.16.16.100:6443
+CoreDNS is running at https://172.16.16.100:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 
 # 如果出现下面的提示`The connection to the server localhost:8080 was refused - did you specify the right host or port?`，先执行以下命令做一下配置
 root@kmaster:~/ # cp /etc/kubernetes/admin.conf ~/.kube/config
@@ -44,7 +44,7 @@ root@kmaster:~/ # cp /etc/kubernetes/admin.conf ~/.kube/config
 2. 创建配置文件目录
 `$ mkdir -p ~/.kube`
 3. 将虚机上的配置文件拷贝到本地
-`$ scp root@192.168.56.100:/root/.kube/config ~/.kube/config`
+`$ scp root@172.16.16.100:/root/.kube/config ~/.kube/config`
 4. 在宿主机上执行
 ```shell
 $ kg pod -n kube-system -o wide
@@ -104,7 +104,7 @@ $ vagrant snapshot list
 ```
 
 ### 问题
-1. ssh登录报错，如果出现如下的问题，使用`ssh-keygen -R 192.168.56.100`删除`known_hosts`中对应的的秘钥信息
+1. ssh登录报错，如果出现如下的问题，使用`ssh-keygen -R 172.16.16.100`删除`known_hosts`中对应的的秘钥信息
 ```
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
